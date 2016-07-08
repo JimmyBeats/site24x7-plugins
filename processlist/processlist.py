@@ -5,7 +5,7 @@ import platform
 import subprocess
 
 #if any impacting changes to this plugin kindly increment the plugin version here.
-PLUGIN_VERSION = "5"
+PLUGIN_VERSION = "6"
 
 #Setting this to true will alert you when there is a communication problem while posting plugin data to server
 HEARTBEAT="true"
@@ -42,12 +42,14 @@ def metricCollector():
            if '-' in value:
                continue
 
+           # The processes we are interested in
+           required_keys = ['php-cli', 'httpd', 'php', 'run-php', 'run-php-lock', 'redis-server', 'exim', 'aws', 'python', 'bash', 'cron', 'crond']
+
            # if the value is only 1, then also not interested (only tracking processes that have multiple)
-           if (value > 1):
+           if (value > 1) and line_raw[-1] in required_keys:
                data[line_raw[-1]] = value
 
            # now make sure that any process we are interested have been included (even if none currently running)
-           required_keys = ['php-cli', 'httpd', 'php', 'run-php', 'run-php-lock', 'redis-server', 'exim']
            for key in required_keys:
                if key not in data:
                    data[key] = 0
