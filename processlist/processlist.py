@@ -10,7 +10,7 @@ PLUGIN_VERSION = "1"
 #Setting this to true will alert you when there is a communication problem while posting plugin data to server
 HEARTBEAT="true"
 
-TOPCOMMAND='ps -eo comm=|sort|uniq -c | sort -k1nr | head -n 20'
+TOPCOMMAND='ps -eo comm=|sort|uniq -c | sort -k1nr | head -n 50'
 
 def metricCollector():
     data = {}
